@@ -1,5 +1,22 @@
 .App {
   text-align: center;
+  box-sizing: border-box;
+}
+
+.board-container {
+  padding: 30px;
+  background: rgb(80, 80, 80);
+}
+
+.board-inner {
+  background: rgb(40, 40, 40);
+}
+
+.board-inner td {
+  height: 40px;
+  width: 40px;
+  border-width: medium;
+  border-style: solid;
 }
 
 .App-logo {
