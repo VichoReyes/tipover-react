@@ -1,3 +1,4 @@
+import 'pattern.css/pattern.scss'
 import './App.css';
 
 const firstCard = {
@@ -7,13 +8,29 @@ const firstCard = {
   start: [4, 2],
 }
 
-function GenericCell({color}) {
+const darkColors = {
+  green: "darkgreen",
+  red: "darkred",
+  yellow: "darkorange",
+  blue: "darkblue",
+}
+
+function GenericCell({color, type}) {
   let style = {borderColor: "#787878"};
+  let className = ""
 
   if (color) {
     style.borderColor = color
+
+    if (type === "standing") {
+      style.color = color
+      style.backgroundColor = darkColors[color]
+      className = "pattern-triangles-sm"
+    } else if (type === "fall-base") {
+      style.backgroundColor = darkColors[color]
+    }
   }
-  return <td style={style}></td>;
+  return <td style={style} className={className}></td>;
 }
 
 function genBoard(width, height) {
@@ -21,7 +38,10 @@ function genBoard(width, height) {
   for (let i = 0; i < width; i++) {
     let row = [];
     for (let j = 0; j < height; j++) {
-      row.push(<GenericCell key={[j, i]}></GenericCell>);
+      row.push({
+        color: null,
+        key: [j, i],
+      });
     }
     board.push(row);
   }
@@ -33,7 +53,11 @@ function genBoard(width, height) {
         return
       }
       const [xCoord, yCoord] = coords
-      board[yCoord][xCoord] = <GenericCell color={crateColor} key={coords}></GenericCell>
+      board[yCoord][xCoord] = {
+        color: crateColor,
+        key: coords,
+        type: "standing",
+      }
     }
   }
 
@@ -52,7 +76,7 @@ function App() {
           <table className="board-inner">
             <tbody>
             {board.map((row, i) => <tr key={`row_${i}`}>
-              {row.map((cell) => cell)}
+              {row.map((cell) => <GenericCell {...cell} />)}
             </tr>)}
             </tbody>
           </table>

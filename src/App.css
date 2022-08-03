@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+}
+
+* {
   box-sizing: border-box;
 }
 
@@ -13,9 +16,9 @@
 }
 
 .board-inner td {
-  height: 40px;
-  width: 40px;
-  border-width: medium;
+  height: 50px;
+  width: 50px;
+  border-width: thick;
   border-style: solid;
 }
 
