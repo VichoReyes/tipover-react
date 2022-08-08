@@ -1,8 +1,9 @@
 import 'pattern.css/pattern.scss'
 import './App.css';
-import {colorLengths, directionUnitVector} from "./constants";
+import {directionUnitVector} from "./constants";
 import {GenericCell} from "./GenericCell";
 import {useEffect, useState} from "react";
+import checkMoveCrate, {fillBoard, getInBoard} from "./board";
 
 /*
 There are three different board representations, depending on
@@ -58,86 +59,6 @@ generates a grid of squares. Each square is like
 From this representation, the Board component is made.
  */
 
-function getInBoard(x, y, board) {
-  if (0 <= y && y < board.length && 0 <= x && x < board[y].length) {
-    return board[y][x];
-  }
-  return null;
-}
-
-function setInBoard(x, y, board, contents) {
-  console.assert(0 <= y && y < board.length && 0 <= x && x < board[y].length);
-  board[y][x] = contents
-}
-
-function fillBoard({card, moves, player}, width, height) {
-  let board = [];
-  for (let i = 0; i < width; i++) {
-    let row = [];
-    for (let j = 0; j < height; j++) {
-      row.push({
-        color: null,
-        key: [j, i],
-      });
-    }
-    board.push(row);
-  }
-
-  function initializeAllOf(crateColor) {
-    for (const coords of card[crateColor] || []) {
-      if (!coords) {
-        return
-      }
-      const [xCoord, yCoord] = coords
-      setInBoard(xCoord, yCoord, board, {
-        color: crateColor,
-        key: coords,
-        type: "standing",
-      });
-    }
-  }
-
-  for (const crateColor of ["blue", "green", "yellow", "red"]) {
-    initializeAllOf(crateColor);
-  }
-
-  function moveCrate(coords, direction) {
-    const [crateX, crateY] = coords;
-    const crateInBoard = getInBoard(crateX, crateY, board);
-
-    // we can only drop a crate if it's standing
-    console.assert(crateInBoard.type === "standing")
-
-    const [directionX, directionY] = directionUnitVector[direction];
-
-    // check fallen locations for emptiness
-    for (let i = 1; i <= colorLengths[crateInBoard.color]; i++) {
-      const [destX, destY] = [crateX + i * directionX, crateY + i * directionY]
-      const destInBoard = getInBoard(destX, destY, board);
-      // make sure dest place exists and doesn't have contents
-      console.assert(destInBoard && !destInBoard.color);
-    }
-
-    // checks passed, let's drop the crate
-    for (let i = 1; i <= colorLengths[crateInBoard.color]; i++) {
-      const [destX, destY] = [crateX + i * directionX, crateY + i * directionY]
-      const destInBoard = getInBoard(destX, destY, board);
-      destInBoard.color = crateInBoard.color
-      destInBoard.type = (i === 1 ? "fall-base" : "fall-top");
-    }
-    crateInBoard.color = null;
-    crateInBoard.type = null;
-  }
-
-  for (const {box, direction} of moves) {
-    moveCrate(box, direction);
-  }
-
-  const [playerX, playerY] = player;
-  board[playerY][playerX].playerHere = true
-  return board;
-}
-
 const firstCard = {
   green: [[3, 0], [0, 1]],
   yellow: [[4, 2]],
@@ -145,35 +66,62 @@ const firstCard = {
   start: [4, 2],
 }
 
+function move(player, direction, board, setGameState, gameState) {
+  const [playerX, playerY] = player
+  // try to move
+  const [directionX, directionY] = directionUnitVector[direction];
+
+  const [destX, destY] = [playerX + directionX, playerY + directionY]
+  const destInBoard = getInBoard(destX, destY, board);
+  if (!destInBoard) {
+    console.log("move impossible! Out of bounds");
+    return;
+  }
+
+  if (destInBoard.color) {
+    setGameState({
+      card: gameState.card,
+      moves: gameState.moves,
+      player: [destX, destY],
+    })
+    return;
+  }
+  // try to drop current crate
+  const currentCrate = getInBoard(playerX, playerY, board)
+  if (currentCrate.type !== "standing") {
+    console.log("move impossible! crate already dropped");
+    return;
+  }
+  if (checkMoveCrate(direction, currentCrate.color, player, board)) {
+    setGameState({
+      card: gameState.card,
+      moves: [...gameState.moves, {
+        box: [playerX, playerY],
+        direction: direction,
+      }],
+      player: [destX, destY],
+    })
+  } else {
+    console.log("move impossible! can't drop crate")
+  }
+}
+
 function App() {
   const [gameState, setGameState] = useState({
     card: firstCard,
     player: firstCard.start,
-    moves: [{box: [4, 2], direction: "up"}, {box: [3, 0], direction: "left"}],
+    moves: [],
   })
   const board = fillBoard(gameState, 6, 6)
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "ArrowLeft" || e.key === "ArrowRight") {
         const direction = e.key.substring(5).toLowerCase();
-        const [playerX, playerY] = gameState.player
-
-        // try to move
-        const [directionX, directionY] = directionUnitVector[direction];
-
-        const [destX, destY] = [playerX + directionX, playerY + directionY]
-        const destInBoard = getInBoard(destX, destY, board);
-        if (!destInBoard || !destInBoard.color) {
-          console.log("move impossible!")
-          return;
-        }
-        setGameState({
-          card: gameState.card,
-          moves: gameState.moves,
-          player: [destX, destY]
-        })
+        const player = gameState.player;
+        move(player, direction, board, setGameState, gameState);
       }
     }
+
     document.addEventListener("keydown", handleKeyDown);
 
     return function cleanup() {
