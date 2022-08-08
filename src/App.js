@@ -57,7 +57,7 @@ generates a grid of squares. Each square is like
 From this representation, the Board component is made.
  */
 
-function fillBoard(card, moves, width, height) {
+function fillBoard({card, moves, player}, width, height) {
   let board = [];
   for (let i = 0; i < width; i++) {
     let row = [];
@@ -131,6 +131,9 @@ function fillBoard(card, moves, width, height) {
   for (const {box, direction} of moves) {
     moveCrate(box, direction);
   }
+
+  const [playerX, playerY] = player;
+  board[playerY][playerX].playerHere = true
   return board;
 }
 
@@ -141,9 +144,14 @@ const firstCard = {
   start: [4, 2],
 }
 
-function GenericCell({color, type}) {
+function GenericCell({color, type, playerHere}) {
   let style = {borderColor: "#787878"};
   let className = ""
+
+  let player = ""
+  if (playerHere) {
+    player = <div className={"player-icon"} />
+  }
 
   if (color) {
     style.borderColor = color
@@ -156,12 +164,13 @@ function GenericCell({color, type}) {
       style.backgroundColor = darkColors[color]
     }
   }
-  return <td style={style} className={className}></td>;
+  return <td style={style} className={className}>{player}</td>;
 }
 
 function App() {
   const [gameState] = useState({
     card: firstCard,
+    player: firstCard.start,
     moves: [{box: [4, 2], direction: "up"}, {box: [3, 0], direction: "left"}],
   })
   useEffect(() => {
@@ -171,12 +180,12 @@ function App() {
       }
     }
     document.addEventListener("keydown", handleKeyDown);
-    
+
     return function cleanup() {
       document.removeEventListener("keydown", handleKeyDown);
     }
   })
-  const board = fillBoard(gameState.card, gameState.moves, 6, 6)
+  const board = fillBoard(gameState, 6, 6)
   return (
     <div className="App">
       <header className="App-header">

@@ -22,6 +22,14 @@
   border-style: solid;
 }
 
+.player-icon {
+  height: 50%;
+  width: 50%;
+  margin: 10px;
+  border-radius: 10px;
+  background: azure;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
