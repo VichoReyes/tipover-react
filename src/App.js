@@ -1,7 +1,7 @@
 import 'pattern.css/pattern.scss'
 import './App.css';
 import {colorLengths, darkColors, directionUnitVector} from "./constants";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 /*
 There are three different board representations, depending on
@@ -163,6 +163,18 @@ function App() {
   const [gameState] = useState({
     card: firstCard,
     moves: [{box: [4, 2], direction: "up"}, {box: [3, 0], direction: "left"}],
+  })
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        console.log("importantKey")
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    
+    return function cleanup() {
+      document.removeEventListener("keydown", handleKeyDown);
+    }
   })
   const board = fillBoard(gameState.card, gameState.moves, 6, 6)
   return (
