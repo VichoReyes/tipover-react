@@ -1,6 +1,7 @@
 import 'pattern.css/pattern.scss'
 import './App.css';
-import {colorLengths, darkColors, directionUnitVector} from "./constants";
+import {colorLengths, directionUnitVector} from "./constants";
+import {GenericCell} from "./GenericCell";
 import {useEffect, useState} from "react";
 
 /*
@@ -142,29 +143,6 @@ const firstCard = {
   yellow: [[4, 2]],
   red: [[1, 4]],
   start: [4, 2],
-}
-
-function GenericCell({color, type, playerHere}) {
-  let style = {borderColor: "#787878"};
-  let className = ""
-
-  let player = ""
-  if (playerHere) {
-    player = <div className={"player-icon"} />
-  }
-
-  if (color) {
-    style.borderColor = color
-
-    if (type === "standing") {
-      style.color = color
-      style.backgroundColor = darkColors[color]
-      className = "pattern-triangles-sm"
-    } else if (type === "fall-base") {
-      style.backgroundColor = darkColors[color]
-    }
-  }
-  return <td style={style} className={className}>{player}</td>;
 }
 
 function App() {
