@@ -58,6 +58,18 @@ generates a grid of squares. Each square is like
 From this representation, the Board component is made.
  */
 
+function getInBoard(x, y, board) {
+  if (0 <= y && y < board.length && 0 <= x && x < board[y].length) {
+    return board[y][x];
+  }
+  return null;
+}
+
+function setInBoard(x, y, board, contents) {
+  console.assert(0 <= y && y < board.length && 0 <= x && x < board[y].length);
+  board[y][x] = contents
+}
+
 function fillBoard({card, moves, player}, width, height) {
   let board = [];
   for (let i = 0; i < width; i++) {
@@ -71,25 +83,13 @@ function fillBoard({card, moves, player}, width, height) {
     board.push(row);
   }
 
-  function getInBoard(x, y) {
-    if (board.length > y && board[y].length > x) {
-      return board[y][x];
-    }
-    return null;
-  }
-
-  function setInBoard(x, y, contents) {
-    console.assert(board.length > y && board[y].length > x);
-    board[y][x] = contents
-  }
-
   function initializeAllOf(crateColor) {
     for (const coords of card[crateColor] || []) {
       if (!coords) {
         return
       }
       const [xCoord, yCoord] = coords
-      setInBoard(xCoord, yCoord, {
+      setInBoard(xCoord, yCoord, board, {
         color: crateColor,
         key: coords,
         type: "standing",
@@ -103,7 +103,7 @@ function fillBoard({card, moves, player}, width, height) {
 
   function moveCrate(coords, direction) {
     const [crateX, crateY] = coords;
-    const crateInBoard = getInBoard(crateX, crateY);
+    const crateInBoard = getInBoard(crateX, crateY, board);
 
     // we can only drop a crate if it's standing
     console.assert(crateInBoard.type === "standing")
@@ -113,7 +113,7 @@ function fillBoard({card, moves, player}, width, height) {
     // check fallen locations for emptiness
     for (let i = 1; i <= colorLengths[crateInBoard.color]; i++) {
       const [destX, destY] = [crateX + i * directionX, crateY + i * directionY]
-      const destInBoard = getInBoard(destX, destY);
+      const destInBoard = getInBoard(destX, destY, board);
       // make sure dest place exists and doesn't have contents
       console.assert(destInBoard && !destInBoard.color);
     }
@@ -121,7 +121,7 @@ function fillBoard({card, moves, player}, width, height) {
     // checks passed, let's drop the crate
     for (let i = 1; i <= colorLengths[crateInBoard.color]; i++) {
       const [destX, destY] = [crateX + i * directionX, crateY + i * directionY]
-      const destInBoard = getInBoard(destX, destY);
+      const destInBoard = getInBoard(destX, destY, board);
       destInBoard.color = crateInBoard.color
       destInBoard.type = (i === 1 ? "fall-base" : "fall-top");
     }
@@ -146,15 +146,32 @@ const firstCard = {
 }
 
 function App() {
-  const [gameState] = useState({
+  const [gameState, setGameState] = useState({
     card: firstCard,
     player: firstCard.start,
     moves: [{box: [4, 2], direction: "up"}, {box: [3, 0], direction: "left"}],
   })
+  const board = fillBoard(gameState, 6, 6)
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "ArrowLeft" || e.key === "ArrowRight") {
-        console.log("importantKey")
+        const direction = e.key.substring(5).toLowerCase();
+        const [playerX, playerY] = gameState.player
+
+        // try to move
+        const [directionX, directionY] = directionUnitVector[direction];
+
+        const [destX, destY] = [playerX + directionX, playerY + directionY]
+        const destInBoard = getInBoard(destX, destY, board);
+        if (!destInBoard || !destInBoard.color) {
+          console.log("move impossible!")
+          return;
+        }
+        setGameState({
+          card: gameState.card,
+          moves: gameState.moves,
+          player: [destX, destY]
+        })
       }
     }
     document.addEventListener("keydown", handleKeyDown);
@@ -163,7 +180,6 @@ function App() {
       document.removeEventListener("keydown", handleKeyDown);
     }
   })
-  const board = fillBoard(gameState, 6, 6)
   return (
     <div className="App">
       <header className="App-header">
