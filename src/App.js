@@ -106,6 +106,14 @@ function move(player, direction, board, setGameState, gameState) {
   }
 }
 
+function rollback_to(move_before, move_index, gameState, setGameState) {
+  setGameState({
+    card: gameState.card,
+    player: move_before.box,
+    moves: gameState.moves.slice(0, move_index),
+  })
+}
+
 function App() {
   const [gameState, setGameState] = useState({
     card: firstCard,
@@ -140,6 +148,15 @@ function App() {
             </tbody>
           </table>
         </div>
+        <ol className="moves-list">
+          {gameState.moves.map((aMove, i) =>
+            <li key={`move_${i}`}>
+           <button type="button" onClick={() => rollback_to(aMove, i, gameState, setGameState)}>
+             {aMove.box[0] + 1}, {aMove.box[1] + 1} {aMove.direction}
+           </button>
+            </li>
+          )}
+        </ol>
       </header>
     </div>
   );
