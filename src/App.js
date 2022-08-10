@@ -59,11 +59,20 @@ generates a grid of squares. Each square is like
 From this representation, the Board component is made.
  */
 
+/*
 const firstCard = {
   green: [[3, 0], [0, 1]],
   yellow: [[4, 2]],
   red: [[1, 4]],
   start: [4, 2],
+}
+*/
+
+const card34 = {
+  yellow: [[0, 0], [1, 0], [2, 0], [1, 1], [3, 2], [4, 3], [4, 4], [4, 5], [3, 5]],
+  green: [[0, 1], [0, 5], [2, 5], [4, 1]],
+  red: [[5, 2]],
+  start: [4, 3],
 }
 
 function move(player, direction, board, setGameState, gameState) {
@@ -116,8 +125,8 @@ function rollback_to(move_before, move_index, gameState, setGameState) {
 
 function App() {
   const [gameState, setGameState] = useState({
-    card: firstCard,
-    player: firstCard.start,
+    card: card34,
+    player: card34.start,
     moves: [],
   })
   const board = fillBoard(gameState, 6, 6)
