@@ -157,15 +157,18 @@ function App() {
             </tbody>
           </table>
         </div>
-        <ol className="moves-list">
-          {gameState.moves.map((aMove, i) =>
-            <li key={`move_${i}`}>
-           <button type="button" onClick={() => rollback_to(aMove, i, gameState, setGameState)}>
-             {aMove.box[0] + 1}, {aMove.box[1] + 1} {aMove.direction}
-           </button>
-            </li>
-          )}
-        </ol>
+        <div className="moves-list">
+          <h3>Deshacer:</h3>
+          <ol>
+            {gameState.moves.map((aMove, i) =>
+              <li key={`move_${i}`}>
+                <button type="button" onClick={() => rollback_to(aMove, i, gameState, setGameState)}>
+                  {aMove.box[0] + 1}, {aMove.box[1] + 1} {aMove.direction}
+                </button>
+              </li>
+            )}
+          </ol>
+        </div>
       </header>
     </div>
   );
