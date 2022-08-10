@@ -1,5 +1,6 @@
 {
   "name": "tipover",
+  "homepage": "https://vichoreyes.github.io/tipover-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
