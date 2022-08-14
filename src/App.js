@@ -1,9 +1,11 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'pattern.css/pattern.scss'
 import './App.css';
 import {directionUnitVector} from "./constants";
 import {GenericCell} from "./GenericCell";
 import {useEffect, useState} from "react";
 import checkMoveCrate, {fillBoard, getInBoard} from "./board";
+import Button from "react-bootstrap/Button";
 
 /*
 There are three different board representations, depending on
@@ -162,9 +164,9 @@ function App() {
           <ol>
             {gameState.moves.map((aMove, i) =>
               <li key={`move_${i}`}>
-                <button type="button" onClick={() => rollback_to(aMove, i, gameState, setGameState)}>
+                <Button variant="light" size="sm" onClick={() => rollback_to(aMove, i, gameState, setGameState)}>
                   {aMove.box[0] + 1}, {aMove.box[1] + 1} {aMove.direction}
-                </button>
+                </Button>
               </li>
             )}
           </ol>
