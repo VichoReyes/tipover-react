@@ -1,4 +1,4 @@
-import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
+import {HashRouter, Link, Route, Switch} from "react-router-dom";
 import {GameDriver} from "./GameDriver";
 import {cards} from "./cards";
 
@@ -47,7 +47,7 @@ function HowToPlay() {
 
 export function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div>
         <nav className="relative w-full bg-gray-300 dark:bg-gray-900">
           <ul className="flex flex-row pl-3">
@@ -72,7 +72,7 @@ export function App() {
           </Route>
         </Switch>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
