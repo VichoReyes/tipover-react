@@ -67,12 +67,6 @@ const firstCard = {
 }
 */
 
-const card34 = {
-  yellow: [[0, 0], [1, 0], [2, 0], [1, 1], [3, 2], [4, 3], [4, 4], [4, 5], [3, 5]],
-  green: [[0, 1], [0, 5], [2, 5], [4, 1]],
-  red: [[5, 2]],
-  start: [4, 3],
-}
 
 function move(player, direction, board, setGameState, gameState) {
   const [playerX, playerY] = player
@@ -122,10 +116,10 @@ function rollback_to(move_before, move_index, gameState, setGameState) {
   })
 }
 
-function Board({finish}) {
+function Board({finish, card}) {
   const [gameState, setGameState] = useState({
-    card: card34,
-    player: card34.start,
+    card: card,
+    player: card.start,
     moves: [],
   })
   if (gameState.player[0] === gameState.card.red[0][0]
