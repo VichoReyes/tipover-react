@@ -6,7 +6,7 @@ export function GenericCell({color, type, playerHere}) {
 
   let player = ""
   if (playerHere) {
-    player = <div className={"player-icon"}/>
+    player = <div className={"h-1/2 w-1/2 rounded-lg m-auto bg-violet-500"}/>
   }
 
   if (color) {
@@ -20,5 +20,5 @@ export function GenericCell({color, type, playerHere}) {
       style.backgroundColor = darkColors[color]
     }
   }
-  return <td style={style} className={className}>{player}</td>;
+  return <td style={style} className={`${className} w-12 h-12 border-solid border-8`}>{player}</td>;
 }

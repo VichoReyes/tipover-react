@@ -1,6 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Board from "./Board";
-import './App.css';
 import {useState} from "react";
 
 function Congrats() {
@@ -13,7 +11,7 @@ export function App() {
   const [finished, setFinished] = useState(false);
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="min-h-screen flex flex-row content-center justify-center bg-gray-600">
         {finished
           ? <Congrats/>
           : <Board finish={() => setFinished(true)}/>

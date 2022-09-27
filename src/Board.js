@@ -3,7 +3,6 @@ import {directionUnitVector} from "./constants";
 import {GenericCell} from "./GenericCell";
 import {useEffect, useState} from "react";
 import checkMoveCrate, {fillBoard, getInBoard} from "./boardUtil";
-import Button from "react-bootstrap/Button";
 
 /*
 There are three different board representations, depending on
@@ -151,8 +150,8 @@ function Board({finish}) {
   })
   return (
     <>
-      <div className="board-container">
-        <table className="board-inner">
+      <div className="p-8 flex flex-row content-center">
+        <table className="bg-gray-800 border-separate h-fit w-fit">
           <tbody>
           {board.map((row, i) => <tr key={`row_${i}`}>
             {row.map((cell) => <GenericCell {...cell} />)}
@@ -167,14 +166,15 @@ function Board({finish}) {
 
 function UndoList({gameState, setGameState}) {
   return (
-    <div className="moves-list">
+    <div className="ml-4 w-36">
       <h3>Deshacer:</h3>
       <ol>
         {gameState.moves.map((aMove, i) =>
           <li key={`move_${i}`}>
-            <Button variant="light" size="sm" onClick={() => rollback_to(aMove, i, gameState, setGameState)}>
+            <button className="my-1 p-1 bg-gray-800 border border-gray-400 rounded text-gray-300"
+              onClick={() => rollback_to(aMove, i, gameState, setGameState)}>
               {aMove.box[0] + 1}, {aMove.box[1] + 1} {aMove.direction}
-            </Button>
+            </button>
           </li>
         )}
       </ol>
