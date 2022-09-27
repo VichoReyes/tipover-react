@@ -20,5 +20,5 @@ export function GenericCell({color, type, playerHere}) {
       style.backgroundColor = darkColors[color]
     }
   }
-  return <td style={style} className={`${className} w-12 h-12 border-solid border-8`}>{player}</td>;
+  return <td style={style} className={`${className} w-10 h-10 md:w-14 md:h-14 border-solid border-8`}>{player}</td>;
 }

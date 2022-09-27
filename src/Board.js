@@ -150,7 +150,7 @@ function Board({finish}) {
   })
   return (
     <>
-      <div className="p-8 flex flex-row content-center">
+      <div className="p-8 flex flex-col md:flex-row content-center">
         <table className="bg-gray-800 border-separate h-fit w-fit">
           <tbody>
           {board.map((row, i) => <tr key={`row_${i}`}>
@@ -171,7 +171,7 @@ function UndoList({gameState, setGameState}) {
       <ol>
         {gameState.moves.map((aMove, i) =>
           <li key={`move_${i}`}>
-            <button className="my-1 p-1 bg-gray-800 border border-gray-400 rounded text-gray-300"
+            <button className="my-1 p-1 border border-gray-400 rounded hover:bg-blue-400"
               onClick={() => rollback_to(aMove, i, gameState, setGameState)}>
               {aMove.box[0] + 1}, {aMove.box[1] + 1} {aMove.direction}
             </button>
