@@ -1,6 +1,8 @@
 .board-container {
   padding: 30px;
-  background: rgb(80, 80, 80);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .board-inner {
@@ -29,6 +31,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  background: rgb(100, 100, 100);
 }
 
 .moves-list {
