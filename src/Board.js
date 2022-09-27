@@ -58,15 +58,6 @@ generates a grid of squares. Each square is like
 From this representation, the Board component is made.
  */
 
-/*
-const firstCard = {
-  green: [[3, 0], [0, 1]],
-  yellow: [[4, 2]],
-  red: [[1, 4]],
-  start: [4, 2],
-}
-*/
-
 
 function move(player, direction, board, setGameState, gameState) {
   const [playerX, playerY] = player

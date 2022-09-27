@@ -5,6 +5,14 @@ const card34 = {
   start: [4, 3],
 }
 
+const card1 = {
+  green: [[3, 0], [0, 1]],
+  yellow: [[4, 2]],
+  red: [[1, 4]],
+  start: [4, 2],
+}
+
 export const cards = [
+  card1,
   card34,
 ]
