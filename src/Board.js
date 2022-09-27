@@ -123,12 +123,16 @@ function rollback_to(move_before, move_index, gameState, setGameState) {
   })
 }
 
-function Board() {
+function Board({finish}) {
   const [gameState, setGameState] = useState({
     card: card34,
     player: card34.start,
     moves: [],
   })
+  if (gameState.player[0] === gameState.card.red[0][0]
+    && gameState.player[1] === gameState.card.red[0][1]) {
+    finish()
+  }
   const board = fillBoard(gameState, 6, 6)
   useEffect(() => {
     function handleKeyDown(e) {
@@ -155,7 +159,7 @@ function Board() {
           </tr>)}
           </tbody>
         </table>
-        <UndoList gameState={gameState} setGameState={setGameState} />
+        <UndoList gameState={gameState} setGameState={setGameState}/>
       </div>
     </>
   );
