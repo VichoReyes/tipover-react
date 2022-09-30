@@ -6,7 +6,7 @@ export function GenericCell({color, type, playerHere}) {
 
   let player = ""
   if (playerHere) {
-    player = <div className={"h-1/2 w-1/2 rounded-lg m-auto bg-violet-500"}/>
+    player = <div className={"h-2/3 w-2/3 rounded-full border border-2 border-white m-auto bg-red-600"}/>
   }
 
   if (color) {
