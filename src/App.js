@@ -3,11 +3,11 @@ import {GameDriver} from "./GameDriver";
 import {cards} from "./cards";
 
 function LevelsList() {
-  return <main className="max-w-2xl mx-auto my-8">
+  return <main className="max-w-2xl mx-auto my-8 p-2">
     <h1 className="text-3xl">
       Levels
     </h1>
-    <ol className="mt-8 grid grid-cols-8 gap-4">
+    <ol className="mt-8 grid grid-cols-5 gap-4">
       {cards.map((_, i) =>
         <Link to={`/levels/${i}`}>
           <li className="border border-4 rounded-lg p-3">
@@ -22,7 +22,7 @@ function LevelsList() {
 }
 
 function HowToPlay() {
-  return <main className="max-w-2xl mx-auto my-8">
+  return <main className="max-w-2xl mx-auto my-8 p-2">
     <h1 className="text-3xl">
       How to Play
     </h1>
@@ -38,7 +38,7 @@ function HowToPlay() {
     <p>
       The easiest way to understand it is to
       {' '}
-      <Link to="/levels/0" className="text-blue-600 underline">
+      <Link to="/levels/0" className="text-blue-600 dark:text-blue-400 underline">
         play the first level
       </Link>.
     </p>
