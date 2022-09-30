@@ -152,7 +152,7 @@ function Board({finish, card}) {
 function UndoList({gameState, setGameState}) {
   return (
     <div className="ml-4 w-36">
-      <h3>Deshacer:</h3>
+      <h3>Undo:</h3>
       <ol>
         {gameState.moves.map((aMove, i) =>
           <li key={`move_${i}`}>
