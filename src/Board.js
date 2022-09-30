@@ -3,6 +3,7 @@ import {directionUnitVector} from "./constants";
 import {GenericCell} from "./GenericCell";
 import {useEffect, useState} from "react";
 import checkMoveCrate, {fillBoard, getInBoard} from "./boardUtil";
+import {FaChevronCircleDown, FaChevronCircleLeft, FaChevronCircleRight, FaChevronCircleUp} from "react-icons/fa";
 
 /*
 There are three different board representations, depending on
@@ -107,6 +108,26 @@ function rollback_to(move_before, move_index, gameState, setGameState) {
   })
 }
 
+function DPad({dPadHandler}) {
+  return (
+    <div className="grid grid-cols-3 gap-2 w-fit self-center m-3
+      bg-gray-300 dark:bg-gray-600 rounded-full text-4xl lg:hidden">
+      <div className="col-start-2" onClick={dPadHandler('up')}>
+        <FaChevronCircleUp/>
+      </div>
+      <div className="col-start-1" onClick={dPadHandler('left')}>
+        <FaChevronCircleLeft/>
+      </div>
+      <div className="col-start-3" onClick={dPadHandler('right')}>
+        <FaChevronCircleRight/>
+      </div>
+      <div className="col-start-2" onClick={dPadHandler('down')}>
+        <FaChevronCircleDown/>
+      </div>
+    </div>
+  );
+}
+
 function Board({finish, card}) {
   const [gameState, setGameState] = useState({
     card: card,
@@ -118,6 +139,14 @@ function Board({finish, card}) {
     finish()
   }
   const board = fillBoard(gameState, 6, 6)
+
+  function handleDPad(direction) {
+    return function () {
+      const player = gameState.player;
+      move(player, direction, board, setGameState, gameState);
+    }
+  }
+
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "ArrowLeft" || e.key === "ArrowRight") {
@@ -143,6 +172,7 @@ function Board({finish, card}) {
           </tr>)}
           </tbody>
         </table>
+        <DPad dPadHandler={handleDPad}/>
         <UndoList gameState={gameState} setGameState={setGameState}/>
       </div>
     </>
@@ -157,7 +187,7 @@ function UndoList({gameState, setGameState}) {
         {gameState.moves.map((aMove, i) =>
           <li key={`move_${i}`}>
             <button className="my-1 p-1 border border-gray-400 rounded hover:bg-blue-400"
-              onClick={() => rollback_to(aMove, i, gameState, setGameState)}>
+                    onClick={() => rollback_to(aMove, i, gameState, setGameState)}>
               {aMove.box[0] + 1}, {aMove.box[1] + 1} {aMove.direction}
             </button>
           </li>
