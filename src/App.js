@@ -35,6 +35,7 @@ function HowToPlay() {
     <p className="my-1">
       Crates have different colors depending on their height.
       Yellow crates are 2 squares tall, green crates are 3 squares and blue crates are 4 squares tall.
+      Check out the top right corner if you forget.
     </p>
     <p>
       The easiest way to understand it is to
@@ -46,23 +47,42 @@ function HowToPlay() {
   </main>;
 }
 
+function NavBar() {
+  return <nav className="relative w-full bg-gray-300 dark:bg-gray-900 flex flex-row text-sm xs:text-base">
+    <ul className="flex flex-row m-4 gap-4">
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/levels">Levels</Link>
+      </li>
+      <li className="hidden sm:block">
+        <a href="https://github.com/VichoReyes/tipover-react/">Source on GitHub</a>
+      </li>
+    </ul>
+
+    <ul className="ml-auto m-4 flex flex-row gap-2 items-center">
+      <li className="h-5 w-5 bg-yellow-400 rounded-full border border-gray-600" />
+      <li>
+        = 2
+      </li>
+      <li className="h-5 w-5 bg-green-500 rounded-full border border-gray-600" />
+      <li>
+        = 3
+      </li>
+      <li className="h-5 w-5 bg-blue-600 rounded-full border border-gray-600" />
+      <li>
+        = 4
+      </li>
+    </ul>
+  </nav>;
+}
+
 export function App() {
   return (
     <HashRouter>
       <div>
-        <nav className="relative w-full bg-gray-300 dark:bg-gray-900">
-          <ul className="flex flex-row pl-3">
-            <li className="p-4">
-              <Link to="/">How to Play</Link>
-            </li>
-            <li className="p-4">
-              <Link to="/levels">All Levels</Link>
-            </li>
-            <li className="p-4">
-              <a href="https://github.com/VichoReyes/tipover-react/">Source on GitHub</a>
-            </li>
-          </ul>
-        </nav>
+        <NavBar />
         <Switch>
           <Route path="/levels/:level_id" children={<GameDriver/>}/>
           <Route path="/levels">
