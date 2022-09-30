@@ -26,12 +26,13 @@ function HowToPlay() {
     <h1 className="text-3xl">
       How to Play
     </h1>
-    <p>
+    <p className="my-1">
       The objective of the game is to get to the red crate.
-      You can use the arrow keys to move around on crates, and if you can, you'll drop
-      those crates to make more walkable way.
+      You can use the arrow keys to move around on adjacent crates.
+      You can't walk over empty (grey) sectors,
+      but you can drop crates on top of them, if there's enough space.
     </p>
-    <p>
+    <p className="my-1">
       Crates have different colors depending on their height.
       Yellow crates are 2 squares tall, green crates are 3 squares and blue crates are 4 squares tall.
     </p>
