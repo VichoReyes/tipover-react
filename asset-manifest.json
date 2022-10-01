@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/tipover-react/static/css/main.4ab38a6b.css",
-    "main.js": "/tipover-react/static/js/main.824892bf.js",
+    "main.js": "/tipover-react/static/js/main.83a6099e.js",
     "static/js/787.e3f7ab07.chunk.js": "/tipover-react/static/js/787.e3f7ab07.chunk.js",
     "index.html": "/tipover-react/index.html",
     "main.4ab38a6b.css.map": "/tipover-react/static/css/main.4ab38a6b.css.map",
-    "main.824892bf.js.map": "/tipover-react/static/js/main.824892bf.js.map",
+    "main.83a6099e.js.map": "/tipover-react/static/js/main.83a6099e.js.map",
     "787.e3f7ab07.chunk.js.map": "/tipover-react/static/js/787.e3f7ab07.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4ab38a6b.css",
-    "static/js/main.824892bf.js"
+    "static/js/main.83a6099e.js"
   ]
 }
