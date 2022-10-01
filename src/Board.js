@@ -112,18 +112,18 @@ function DPad({dPadHandler}) {
   return (
     <div className="grid grid-cols-3 gap-2 w-fit self-center m-3
       bg-gray-300 dark:bg-gray-600 rounded-full text-4xl lg:hidden">
-      <div className="col-start-2" onClick={dPadHandler('up')}>
+      <button className="col-start-2 active:text-blue-600" onClick={dPadHandler('up')}>
         <FaChevronCircleUp/>
-      </div>
-      <div className="col-start-1" onClick={dPadHandler('left')}>
+      </button>
+      <button className="col-start-1 active:text-blue-600" onClick={dPadHandler('left')}>
         <FaChevronCircleLeft/>
-      </div>
-      <div className="col-start-3" onClick={dPadHandler('right')}>
+      </button>
+      <button className="col-start-3 active:text-blue-600" onClick={dPadHandler('right')}>
         <FaChevronCircleRight/>
-      </div>
-      <div className="col-start-2" onClick={dPadHandler('down')}>
+      </button>
+      <button className="col-start-2 active:text-blue-600" onClick={dPadHandler('down')}>
         <FaChevronCircleDown/>
-      </div>
+      </button>
     </div>
   );
 }
@@ -153,6 +153,7 @@ function Board({finish, card}) {
         const direction = e.key.substring(5).toLowerCase();
         const player = gameState.player;
         move(player, direction, board, setGameState, gameState);
+        e.preventDefault();
       }
     }
 
