@@ -47,7 +47,7 @@ function HowToPlay() {
     <p>
       The easiest way to understand it is to
       {' '}
-      <Link to="/levels/0" className="text-blue-600 dark:text-blue-400 underline">
+      <Link to="/levels/1" className="text-blue-600 dark:text-blue-400 underline">
         play the first level
       </Link>.
     </p>
