@@ -15,7 +15,7 @@ function Congrats() {
 export function GameDriver() {
   const {level_id} = useParams();
   const [finished, setFinished] = useState(false);
-  const card = cards[Number.parseInt(level_id)];
+  const card = cards[level_id];
   if (!card) {
     return <p>404 error (TODO: make it a real status code error)</p>
   }

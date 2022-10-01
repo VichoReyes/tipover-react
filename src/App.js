@@ -1,6 +1,6 @@
 import {HashRouter, Link, Route, Switch} from "react-router-dom";
 import {GameDriver} from "./GameDriver";
-import {cards} from "./cards";
+import {card_ids} from "./cards";
 
 function LevelsList() {
   return <main className="max-w-2xl mx-auto my-8 p-2">
@@ -8,11 +8,11 @@ function LevelsList() {
       Levels
     </h1>
     <ol className="mt-8 grid grid-cols-5 gap-4">
-      {cards.map((_, i) =>
-        <Link to={`/levels/${i}`}>
+      {card_ids.map((level_id) =>
+        <Link to={`/levels/${level_id}`}>
           <li className="border border-4 rounded-lg p-3">
             <div className="w-fit mx-auto">
-              {i + 1}
+              {level_id}
             </div>
           </li>
         </Link>
