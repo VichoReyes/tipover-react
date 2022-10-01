@@ -3,22 +3,29 @@ import {GameDriver} from "./GameDriver";
 import {card_ids} from "./cards";
 
 function LevelsList() {
-  return <main className="max-w-2xl mx-auto my-8 p-2">
-    <h1 className="text-3xl">
-      Levels
-    </h1>
-    <ol className="mt-8 grid grid-cols-5 gap-4">
-      {card_ids.map((level_id) =>
-        <Link to={`/levels/${level_id}`}>
-          <li className="border border-4 rounded-lg p-3">
-            <div className="w-fit mx-auto">
-              {level_id}
-            </div>
-          </li>
-        </Link>
-      )}
-    </ol>
-  </main>;
+  return (
+    <main className="max-w-2xl mx-auto my-8 p-2">
+      <h1 className="text-3xl">
+        Levels
+      </h1>
+      <ol className="mt-8 grid grid-cols-5 gap-4">
+        {card_ids.map((level_id) => {
+          const isCompleted = localStorage.getItem(`tipover-level-${level_id}`) === "finished";
+          const completedStyle = "bg-green-200 text-green-900 border-green-300 " +
+            "dark:bg-green-800 dark:text-green-200 dark: border-green-600 line-through";
+          return (
+            <Link to={`/levels/${level_id}`}>
+              <li className={`border border-4 rounded-lg p-3 ${isCompleted ? completedStyle : ""}`}>
+                <div className="w-fit mx-auto">
+                  {level_id}
+                </div>
+              </li>
+            </Link>
+          );
+        })}
+      </ol>
+    </main>
+  );
 }
 
 function HowToPlay() {

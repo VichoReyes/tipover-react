@@ -13,18 +13,21 @@ function Congrats() {
 }
 
 export function GameDriver() {
-  const {level_id} = useParams();
+  const { level_id } = useParams();
   const [finished, setFinished] = useState(false);
   const card = cards[level_id];
   if (!card) {
-    return <p>404 error (TODO: make it a real status code error)</p>
+    return <p>404 error (TODO: make it a real status code error)</p>;
   }
+
+  function finishGame() {
+    localStorage.setItem(`tipover-level-${level_id}`, "finished")
+    return setFinished(true);
+  }
+
   return (
     <main className="mx-auto w-fit">
-      {finished
-        ? <Congrats/>
-        : <Board finish={() => setFinished(true)} card={card}/>
-      }
+      {finished ? <Congrats /> : <Board finish={finishGame} card={card} />}
     </main>
-  )
+  );
 }
